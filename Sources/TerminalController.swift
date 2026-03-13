@@ -1459,6 +1459,9 @@ class TerminalController {
         case "report_pwd":
             return reportPwd(args)
 
+        case "report_agent_status":
+            return reportAgentStatus(args)
+
         case "sidebar_state":
             return sidebarState(args)
 
@@ -13284,6 +13287,80 @@ class TerminalController {
             }
 
             tab.updatePanelGitBranch(panelId: surfaceId, branch: branch, isDirty: isDirty)
+        }
+        return result
+    }
+
+    // MARK: - Agent Status
+
+    /// Receive agent session status updates from CLI hooks.
+    /// Usage: report_agent_status <status> [--tab=X] [--panel=Y] [--type=claude] [--task=...] [--name=...]
+    private func reportAgentStatus(_ args: String) -> String {
+        let parsed = parseOptions(args)
+        guard let statusRaw = parsed.positional.first,
+              let status = AgentStatus(rawValue: statusRaw) else {
+            return "ERROR: Missing or invalid status — usage: report_agent_status <working|thinking|waiting|idle|stopped> [--tab=X] [--panel=Y] [--type=claude] [--task=...] [--name=...]"
+        }
+        let agentTypeRaw = parsed.options["type"] ?? "claude"
+        let agentType = AgentType(rawValue: agentTypeRaw) ?? .claude
+        let task = parsed.options["task"]
+        let name = parsed.options["name"]
+
+        // Off-main fast path when explicit scope is provided (standard for hook telemetry).
+        if let scope = Self.explicitSocketScope(options: parsed.options) {
+            DispatchQueue.main.async {
+                guard let tabManager = AppDelegate.shared?.tabManagerFor(tabId: scope.workspaceId),
+                      let tab = tabManager.tabs.first(where: { $0.id == scope.workspaceId }) else {
+                    return
+                }
+                guard tab.panels.keys.contains(scope.panelId) else { return }
+                var session = tab.agentSessions[scope.panelId] ?? AgentSessionInfo(
+                    status: status,
+                    agentType: agentType,
+                    lastUpdated: Date()
+                )
+                session.status = status
+                session.agentType = agentType
+                session.lastUpdated = Date()
+                if let task { session.currentTask = task }
+                if let name { session.sessionName = name }
+                tab.agentSessions[scope.panelId] = session
+            }
+            return "OK"
+        }
+
+        // Fallback: resolve on main.
+        var result = "OK"
+        DispatchQueue.main.sync {
+            guard let tab = resolveTabForReport(args) else {
+                result = parsed.options["tab"] != nil ? "ERROR: Tab not found" : "ERROR: No tab selected"
+                return
+            }
+            let panelArg = parsed.options["panel"] ?? parsed.options["surface"]
+            let panelId: UUID
+            if let panelArg, let parsedId = UUID(uuidString: panelArg) {
+                panelId = parsedId
+            } else if let focused = tab.focusedPanelId {
+                panelId = focused
+            } else {
+                result = "ERROR: Missing panel id (no focused surface)"
+                return
+            }
+            guard tab.panels.keys.contains(panelId) else {
+                result = "ERROR: Panel not found '\(panelId.uuidString)'"
+                return
+            }
+            var session = tab.agentSessions[panelId] ?? AgentSessionInfo(
+                status: status,
+                agentType: agentType,
+                lastUpdated: Date()
+            )
+            session.status = status
+            session.agentType = agentType
+            session.lastUpdated = Date()
+            if let task { session.currentTask = task }
+            if let name { session.sessionName = name }
+            tab.agentSessions[panelId] = session
         }
         return result
     }

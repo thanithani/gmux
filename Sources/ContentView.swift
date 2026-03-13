@@ -7306,6 +7306,51 @@ struct VerticalTabsSidebar: View {
                                     selectedTabIds: $selectedTabIds,
                                     lastSidebarSelectionIndex: $lastSidebarSelectionIndex,
                                     showsModifierShortcutHints: modifierKeyMonitor.isModifierPressed,
+                                    agentSessionSummary: AgentSessionSummary.from(sessions: tab.agentSessions),
+                                    subTabPanels: {
+                                        let orderedIds = tab.sidebarOrderedPanelIds()
+                                        let focusedId = tab.focusedPanelId
+                                        return orderedIds.compactMap { panelId in
+                                            guard let panel = tab.panels[panelId] else { return nil }
+                                            let session = tab.agentSessions[panelId]
+                                            let label: String
+                                            let icon: String
+                                            if let session {
+                                                switch session.agentType {
+                                                case .claude:
+                                                    label = "Claude"
+                                                    icon = "sparkle"
+                                                case .codex:
+                                                    label = "Codex"
+                                                    icon = "sparkle"
+                                                case .terminal:
+                                                    label = String(localized: "subtab.terminal", defaultValue: "Terminal")
+                                                    icon = "terminal"
+                                                }
+                                            } else if panel is TerminalPanel {
+                                                label = String(localized: "subtab.terminal", defaultValue: "Terminal")
+                                                icon = "terminal"
+                                            } else {
+                                                label = String(localized: "subtab.browser", defaultValue: "Browser")
+                                                icon = "globe"
+                                            }
+                                            let statusColor: Color? = session.flatMap { s in
+                                                switch s.status {
+                                                case .working: return .green
+                                                case .thinking: return .yellow
+                                                case .waiting: return .blue
+                                                case .idle, .stopped: return nil
+                                                }
+                                            }
+                                            return SubTabPanelInfo(
+                                                id: panelId,
+                                                label: label,
+                                                iconName: icon,
+                                                isFocused: panelId == focusedId,
+                                                statusColor: statusColor
+                                            )
+                                        }
+                                    }(),
                                     dragAutoScrollController: dragAutoScrollController,
                                     draggedTabId: $draggedTabId,
                                     dropIndicator: $dropIndicator
@@ -9546,6 +9591,61 @@ enum SidebarWorkspaceShortcutHintMetrics {
     #endif
 }
 
+/// Precomputed sub-tab panel info for sidebar pill indicators.
+struct SubTabPanelInfo: Equatable, Identifiable {
+    let id: UUID  // panelId
+    let label: String       // "Terminal", "Claude", "Browser"
+    let iconName: String    // SF Symbol
+    let isFocused: Bool
+    let statusColor: Color?
+}
+
+/// Precomputed agent session summary for sidebar display.
+/// Passed as a `let` to TabItemView to avoid subscribing to workspace changes.
+struct AgentSessionSummary: Equatable {
+    let label: String       // e.g. "Fix login bug"
+    let statusText: String  // e.g. "Working (Edit)"
+    let statusColor: Color  // green, yellow, blue, gray
+    let agentType: AgentType
+
+    static func from(sessions: [UUID: AgentSessionInfo]) -> AgentSessionSummary? {
+        // Pick the most active session to display.
+        let active = sessions.values
+            .sorted { $0.lastUpdated > $1.lastUpdated }
+            .first { $0.status != .stopped }
+            ?? sessions.values.sorted(by: { $0.lastUpdated > $1.lastUpdated }).first
+        guard let session = active else { return nil }
+
+        let statusText: String
+        let statusColor: Color
+        switch session.status {
+        case .working:
+            statusText = session.currentTask ?? String(localized: "agent.status.working", defaultValue: "Working")
+            statusColor = .green
+        case .thinking:
+            statusText = String(localized: "agent.status.thinking", defaultValue: "Thinking")
+            statusColor = .yellow
+        case .waiting:
+            statusText = String(localized: "agent.status.waiting", defaultValue: "Waiting for input")
+            statusColor = .blue
+        case .idle:
+            statusText = String(localized: "agent.status.idle", defaultValue: "Idle")
+            statusColor = .gray
+        case .stopped:
+            statusText = String(localized: "agent.status.stopped", defaultValue: "Stopped")
+            statusColor = .gray
+        }
+
+        let label = session.sessionName ?? session.currentTask ?? ""
+        return AgentSessionSummary(
+            label: label,
+            statusText: statusText,
+            statusColor: statusColor,
+            agentType: session.agentType
+        )
+    }
+}
+
 // PERF: TabItemView is Equatable so SwiftUI skips body re-evaluation when
 // the parent rebuilds with unchanged values. Without this, every TabManager
 // or NotificationStore publish causes ALL tab items to re-evaluate (~18% of
@@ -9565,7 +9665,9 @@ private struct TabItemView: View, Equatable {
         lhs.unreadCount == rhs.unreadCount &&
         lhs.latestNotificationText == rhs.latestNotificationText &&
         lhs.rowSpacing == rhs.rowSpacing &&
-        lhs.showsModifierShortcutHints == rhs.showsModifierShortcutHints
+        lhs.showsModifierShortcutHints == rhs.showsModifierShortcutHints &&
+        lhs.agentSessionSummary == rhs.agentSessionSummary &&
+        lhs.subTabPanels == rhs.subTabPanels
     }
 
     // Use plain references instead of @EnvironmentObject to avoid subscribing
@@ -9587,6 +9689,8 @@ private struct TabItemView: View, Equatable {
     @Binding var selectedTabIds: Set<UUID>
     @Binding var lastSidebarSelectionIndex: Int?
     let showsModifierShortcutHints: Bool
+    let agentSessionSummary: AgentSessionSummary?
+    let subTabPanels: [SubTabPanelInfo]
     let dragAutoScrollController: SidebarDragAutoScrollController
     @Binding var draggedTabId: UUID?
     @Binding var dropIndicator: SidebarDropIndicator?
@@ -9603,6 +9707,8 @@ private struct TabItemView: View, Equatable {
     @AppStorage(BrowserLinkOpenSettings.openSidebarPullRequestLinksInCmuxBrowserKey)
     private var openSidebarPullRequestLinksInCmuxBrowser = BrowserLinkOpenSettings.defaultOpenSidebarPullRequestLinksInCmuxBrowser
     @AppStorage("sidebarShowPorts") private var sidebarShowPorts = true
+    @AppStorage("sidebarShowAgentSessions") private var sidebarShowAgentSessions = true
+    @AppStorage("sidebarShowSubTabs") private var sidebarShowSubTabs = true
     @AppStorage("sidebarShowLog") private var sidebarShowLog = true
     @AppStorage("sidebarShowProgress") private var sidebarShowProgress = true
     @AppStorage("sidebarShowStatusPills") private var sidebarShowMetadata = true
@@ -9831,6 +9937,64 @@ private struct TabItemView: View, Equatable {
                     .lineLimit(2)
                     .truncationMode(.tail)
                     .multilineTextAlignment(.leading)
+            }
+
+            // Agent session info
+            if sidebarShowAgentSessions, let summary = agentSessionSummary {
+                HStack(spacing: 4) {
+                    Circle()
+                        .fill(summary.statusColor)
+                        .frame(width: 6, height: 6)
+                    if !summary.label.isEmpty {
+                        Text(summary.label)
+                            .font(.system(size: 10, weight: .medium))
+                            .foregroundColor(activeSecondaryColor(0.9))
+                            .lineLimit(1)
+                            .truncationMode(.tail)
+                    }
+                    Text(summary.statusText)
+                        .font(.system(size: 10))
+                        .foregroundColor(activeSecondaryColor(0.7))
+                        .lineLimit(1)
+                        .truncationMode(.tail)
+                }
+                .transition(.opacity.combined(with: .move(edge: .top)))
+            }
+
+            // Sub-tab panel indicators (only show when there are multiple panels)
+            if sidebarShowSubTabs, subTabPanels.count > 1 {
+                HStack(spacing: 3) {
+                    ForEach(subTabPanels) { panel in
+                        Button(action: {
+                            tabManager.selectTab(tab)
+                            tab.focusPanel(panel.id)
+                        }) {
+                            HStack(spacing: 2) {
+                                Image(systemName: panel.iconName)
+                                    .font(.system(size: 8))
+                                if let color = panel.statusColor {
+                                    Circle()
+                                        .fill(color)
+                                        .frame(width: 4, height: 4)
+                                }
+                                Text(panel.label)
+                                    .font(.system(size: 9))
+                                    .lineLimit(1)
+                            }
+                            .padding(.horizontal, 4)
+                            .padding(.vertical, 2)
+                            .background(
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(panel.isFocused
+                                        ? activeSecondaryColor(0.15)
+                                        : Color.clear)
+                            )
+                            .foregroundColor(activeSecondaryColor(panel.isFocused ? 0.9 : 0.6))
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .transition(.opacity.combined(with: .move(edge: .top)))
             }
 
             if detailVisibility.showsMetadata {

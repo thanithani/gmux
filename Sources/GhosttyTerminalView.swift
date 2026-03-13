@@ -362,6 +362,17 @@ func resolveTerminalOpenURLTarget(_ rawValue: String) -> TerminalOpenURLTarget? 
         return .external(URL(fileURLWithPath: trimmed))
     }
 
+    // Handle paths with line:column suffixes like /path/file.rs:42 or /path/file.rs:42:10
+    if trimmed.hasPrefix("/"), let colonRange = trimmed.range(of: ":\\d+", options: .regularExpression) {
+        let pathPart = String(trimmed[trimmed.startIndex..<colonRange.lowerBound])
+        if NSString(string: pathPart).isAbsolutePath {
+            #if DEBUG
+            dlog("link.resolve result=external(absolutePathWithLineNumber) path=\(pathPart) raw=\(trimmed)")
+            #endif
+            return .external(URL(fileURLWithPath: pathPart))
+        }
+    }
+
     if let parsed = URL(string: trimmed),
        let scheme = parsed.scheme?.lowercased() {
         if scheme == "http" || scheme == "https" {
@@ -2196,6 +2207,15 @@ class GhosttyApp {
                 dlog("link.openURL resolve failed, returning false")
                 #endif
                 return false
+            }
+            // Always open local file paths in external editor (e.g. Zed) rather than embedded browser.
+            if BrowserLinkOpenSettings.openLocalFilesInExternalEditor() && target.url.isFileURL {
+                #if DEBUG
+                dlog("link.openURL localFile=true, opening in external editor url=\(target.url)")
+                #endif
+                return performOnMain {
+                    NSWorkspace.shared.open(target.url)
+                }
             }
             if !BrowserLinkOpenSettings.openTerminalLinksInCmuxBrowser() {
                 #if DEBUG

@@ -7596,6 +7596,10 @@ struct CMUXCLI {
                 icon: "bolt.fill",
                 color: "#4C8DFF"
             )
+            _ = try? sendV1Command(
+                "report_agent_status working --tab=\(workspaceId) --panel=\(surfaceId) --type=claude",
+                client: client
+            )
             print("OK")
 
         case "stop", "idle":
@@ -7607,6 +7611,16 @@ struct CMUXCLI {
             )
             let workspaceId = consumedSession?.workspaceId ?? fallbackWorkspaceId
             try clearClaudeStatus(client: client, workspaceId: workspaceId)
+            if let stopSurfaceId = try? resolveSurfaceIdForClaudeHook(
+                consumedSession?.surfaceId ?? surfaceArg,
+                workspaceId: workspaceId,
+                client: client
+            ) {
+                _ = try? sendV1Command(
+                    "report_agent_status stopped --tab=\(workspaceId) --panel=\(stopSurfaceId) --type=claude",
+                    client: client
+                )
+            }
 
             if let completion = summarizeClaudeHookStop(
                 parsedInput: parsedInput,
@@ -7688,13 +7702,61 @@ struct CMUXCLI {
                 icon: "bell.fill",
                 color: "#4C8DFF"
             )
+            _ = try? sendV1Command(
+                "report_agent_status waiting --tab=\(workspaceId) --panel=\(surfaceId) --type=claude",
+                client: client
+            )
             print(response)
+
+        case "tool-start":
+            telemetry.breadcrumb("claude-hook.tool-start")
+            var workspaceId = fallbackWorkspaceId
+            var preferredSurface = surfaceArg
+            if let sessionId = parsedInput.sessionId,
+               let mapped = try? sessionStore.lookup(sessionId: sessionId),
+               let mappedWorkspace = try? resolveWorkspaceIdForClaudeHook(mapped.workspaceId, client: client) {
+                workspaceId = mappedWorkspace
+                preferredSurface = mapped.surfaceId
+            }
+            let surfaceId = try resolveSurfaceIdForClaudeHook(
+                preferredSurface,
+                workspaceId: workspaceId,
+                client: client
+            )
+            let toolName = extractToolName(from: parsedInput)
+            let taskDesc = toolName.map { "Using \($0)" } ?? "Working"
+            _ = try sendV1Command(
+                "report_agent_status working --tab=\(workspaceId) --panel=\(surfaceId) --type=claude --task=\(taskDesc)",
+                client: client
+            )
+            print("OK")
+
+        case "tool-end":
+            telemetry.breadcrumb("claude-hook.tool-end")
+            var workspaceId = fallbackWorkspaceId
+            var preferredSurface = surfaceArg
+            if let sessionId = parsedInput.sessionId,
+               let mapped = try? sessionStore.lookup(sessionId: sessionId),
+               let mappedWorkspace = try? resolveWorkspaceIdForClaudeHook(mapped.workspaceId, client: client) {
+                workspaceId = mappedWorkspace
+                preferredSurface = mapped.surfaceId
+            }
+            let surfaceId = try resolveSurfaceIdForClaudeHook(
+                preferredSurface,
+                workspaceId: workspaceId,
+                client: client
+            )
+            _ = try sendV1Command(
+                "report_agent_status thinking --tab=\(workspaceId) --panel=\(surfaceId) --type=claude",
+                client: client
+            )
+            print("OK")
 
         case "help", "--help", "-h":
             telemetry.breadcrumb("claude-hook.help")
             print(
                 """
-                cmux claude-hook <session-start|stop|notification> [--workspace <id|index>] [--surface <id|index>]
+                cmux claude-hook <session-start|stop|notification|tool-start|tool-end> [--workspace <id|index>] [--surface <id|index>]
                 """
             )
 
@@ -7713,6 +7775,14 @@ struct CMUXCLI {
         _ = try client.send(
             command: "set_status claude_code \(value) --icon=\(icon) --color=\(color) --tab=\(workspaceId)"
         )
+    }
+
+    private func extractToolName(from input: ClaudeHookParsedInput) -> String? {
+        guard let object = input.object else { return nil }
+        if let toolName = object["tool_name"] as? String { return toolName }
+        if let toolInput = object["tool_input"] as? [String: Any],
+           let name = toolInput["tool_name"] as? String { return name }
+        return nil
     }
 
     private func clearClaudeStatus(client: SocketClient, workspaceId: String) throws {

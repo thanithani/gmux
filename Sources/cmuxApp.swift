@@ -3097,6 +3097,10 @@ struct SettingsView: View {
     @AppStorage("sidebarShowLog") private var sidebarShowLog = true
     @AppStorage("sidebarShowProgress") private var sidebarShowProgress = true
     @AppStorage("sidebarShowStatusPills") private var sidebarShowMetadata = true
+    @AppStorage("sidebarShowAgentSessions") private var sidebarShowAgentSessions = true
+    @AppStorage("sidebarShowSubTabs") private var sidebarShowSubTabs = true
+    @AppStorage(BrowserLinkOpenSettings.openLocalFilesInExternalEditorKey)
+    private var openLocalFilesInExternalEditor = BrowserLinkOpenSettings.defaultOpenLocalFilesInExternalEditor
     @ObservedObject private var notificationStore = TerminalNotificationStore.shared
     @State private var shortcutResetToken = UUID()
     @State private var topBlurOpacity: Double = 0
@@ -3812,6 +3816,30 @@ struct SettingsView: View {
                         SettingsCardDivider()
 
                         SettingsCardRow(
+                            String(localized: "settings.app.showAgentSessions", defaultValue: "Show Agent Session Info in Sidebar"),
+                            subtitle: String(localized: "settings.app.showAgentSessions.subtitle", defaultValue: "Display Claude/Codex agent session status and current task.")
+                        ) {
+                            Toggle("", isOn: $sidebarShowAgentSessions)
+                                .labelsHidden()
+                                .controlSize(.small)
+                        }
+                        .disabled(sidebarHideAllDetails)
+
+                        SettingsCardDivider()
+
+                        SettingsCardRow(
+                            String(localized: "settings.app.showSubTabs", defaultValue: "Show Sub-Tab Indicators in Sidebar"),
+                            subtitle: String(localized: "settings.app.showSubTabs.subtitle", defaultValue: "Display clickable panel indicators for workspaces with multiple panes.")
+                        ) {
+                            Toggle("", isOn: $sidebarShowSubTabs)
+                                .labelsHidden()
+                                .controlSize(.small)
+                        }
+                        .disabled(sidebarHideAllDetails)
+
+                        SettingsCardDivider()
+
+                        SettingsCardRow(
                             String(localized: "settings.app.showLog", defaultValue: "Show Latest Log in Sidebar"),
                             subtitle: String(localized: "settings.app.showLog.subtitle", defaultValue: "Display the latest imperative log/status message.")
                         ) {
@@ -4078,6 +4106,17 @@ struct SettingsView: View {
                             subtitle: String(localized: "settings.browser.openTerminalLinks.subtitle", defaultValue: "When off, links clicked in terminal output open in your default browser.")
                         ) {
                             Toggle("", isOn: $openTerminalLinksInCmuxBrowser)
+                                .labelsHidden()
+                                .controlSize(.small)
+                        }
+
+                        SettingsCardDivider()
+
+                        SettingsCardRow(
+                            String(localized: "settings.browser.openLocalFilesExternally", defaultValue: "Open Local Files in External Editor"),
+                            subtitle: String(localized: "settings.browser.openLocalFilesExternally.subtitle", defaultValue: "Open file:// paths via the system default editor instead of the embedded browser.")
+                        ) {
+                            Toggle("", isOn: $openLocalFilesInExternalEditor)
                                 .labelsHidden()
                                 .controlSize(.small)
                         }
@@ -4498,6 +4537,9 @@ struct SettingsView: View {
         sidebarShowLog = true
         sidebarShowProgress = true
         sidebarShowMetadata = true
+        sidebarShowAgentSessions = true
+        sidebarShowSubTabs = true
+        openLocalFilesInExternalEditor = BrowserLinkOpenSettings.defaultOpenLocalFilesInExternalEditor
         showOpenAccessConfirmation = false
         pendingOpenAccessMode = nil
         socketPasswordDraft = ""

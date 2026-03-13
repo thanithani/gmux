@@ -2299,7 +2299,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
            let tab = tabManager.tabs.first(where: { $0.id == tabId }) {
             tab.triggerNotificationFocusFlash(panelId: surfaceId, requiresSplit: false, shouldFocus: false)
         }
+        // Mark read and remove delivered notifications before willPresent can re-present them.
         notificationStore.markRead(forTabId: tabId, surfaceId: surfaceId)
+        notificationStore.removeDeliveredNotifications(forTabId: tabId, surfaceId: surfaceId)
     }
 
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
@@ -9641,6 +9643,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
         willPresent notification: UNNotification,
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
+        // Suppress banner for notifications whose tab is already focused and app is active.
+        // This prevents duplicate banners when the app regains focus with pending notifications.
+        if let tabIdString = notification.request.content.userInfo["tabId"] as? String,
+           let tabId = UUID(uuidString: tabIdString),
+           AppFocusState.isAppFocused(),
+           tabManager?.selectedTabId == tabId {
+            let surfaceId: UUID? = {
+                guard let s = notification.request.content.userInfo["surfaceId"] as? String else { return nil }
+                return UUID(uuidString: s)
+            }()
+            let focusedSurfaceId = tabManager?.focusedSurfaceId(for: tabId)
+            let isFocusedSurface = surfaceId == nil || focusedSurfaceId == surfaceId
+            if isFocusedSurface {
+                completionHandler([.list])
+                return
+            }
+        }
+
         var options: UNNotificationPresentationOptions = [.banner, .list]
         if notification.request.content.sound != nil {
             options.insert(.sound)

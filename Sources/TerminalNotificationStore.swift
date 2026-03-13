@@ -924,6 +924,18 @@ final class TerminalNotificationStore: ObservableObject {
         }
     }
 
+    /// Remove delivered system notifications for a specific tab/surface without changing read state.
+    /// Used on app activation to prevent willPresent from re-presenting stale banners.
+    func removeDeliveredNotifications(forTabId tabId: UUID, surfaceId: UUID?) {
+        let ids = notifications
+            .filter { $0.tabId == tabId && $0.surfaceId == surfaceId }
+            .map { $0.id.uuidString }
+        if !ids.isEmpty {
+            center.removeDeliveredNotificationsOffMain(withIdentifiers: ids)
+            center.removePendingNotificationRequestsOffMain(withIdentifiers: ids)
+        }
+    }
+
     func markUnread(forTabId tabId: UUID) {
         var updated = notifications
         var didChange = false

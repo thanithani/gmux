@@ -908,6 +908,30 @@ struct ClosedBrowserPanelRestoreSnapshot {
     let fallbackAnchorPaneId: UUID?
 }
 
+// MARK: - Agent Session Types
+
+enum AgentStatus: String, Codable, Equatable {
+    case working    // actively using tools
+    case thinking   // processing (between tool calls)
+    case waiting    // waiting for user input (notification hook)
+    case idle       // session started but no recent activity
+    case stopped    // session ended
+}
+
+enum AgentType: String, Codable, Equatable {
+    case claude
+    case codex
+    case terminal
+}
+
+struct AgentSessionInfo: Equatable, Codable {
+    var sessionName: String?
+    var currentTask: String?
+    var status: AgentStatus
+    var agentType: AgentType
+    var lastUpdated: Date
+}
+
 /// Workspace represents a sidebar tab.
 /// Each workspace contains one BonsplitController that manages split panes and nested surfaces.
 @MainActor
@@ -1000,6 +1024,10 @@ final class Workspace: Identifiable, ObservableObject {
     @Published var listeningPorts: [Int] = []
     var surfaceTTYNames: [UUID: String] = [:]
     private var restoredTerminalScrollbackByPanelId: [UUID: String] = [:]
+
+    // MARK: - Agent Session Tracking
+
+    @Published var agentSessions: [UUID: AgentSessionInfo] = [:]  // keyed by panelId
 
     var focusedSurfaceId: UUID? { focusedPanelId }
     var surfaceDirectories: [UUID: String] {
@@ -3348,6 +3376,7 @@ final class Workspace: Identifiable, ObservableObject {
         guard let paneId = paneId(forPanelId: panelId) else { return false }
         guard bonsplitController.togglePaneZoom(inPane: paneId) else { return false }
         focusPanel(panelId)
+        scheduleFocusReconcile()
         reconcileTerminalPortalVisibilityForCurrentRenderedLayout()
         reconcileBrowserPortalVisibilityForCurrentRenderedLayout(reason: "workspace.toggleSplitZoom")
         scheduleTerminalPortalVisibilityReconcileAfterSplitZoom(remainingPasses: 4)

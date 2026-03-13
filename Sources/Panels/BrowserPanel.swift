@@ -189,6 +189,9 @@ enum BrowserLinkOpenSettings {
     static let browserExternalOpenPatternsKey = "browserExternalOpenPatterns"
     static let defaultBrowserExternalOpenPatterns: String = ""
 
+    static let openLocalFilesInExternalEditorKey = "browserOpenLocalFilesInExternalEditor"
+    static let defaultOpenLocalFilesInExternalEditor: Bool = true
+
     static func openTerminalLinksInCmuxBrowser(defaults: UserDefaults = .standard) -> Bool {
         if defaults.object(forKey: openTerminalLinksInCmuxBrowserKey) == nil {
             return defaultOpenTerminalLinksInCmuxBrowser
@@ -218,6 +221,13 @@ enum BrowserLinkOpenSettings {
 
     static func initialInterceptTerminalOpenCommandInCmuxBrowserValue(defaults: UserDefaults = .standard) -> Bool {
         interceptTerminalOpenCommandInCmuxBrowser(defaults: defaults)
+    }
+
+    static func openLocalFilesInExternalEditor(defaults: UserDefaults = .standard) -> Bool {
+        if defaults.object(forKey: openLocalFilesInExternalEditorKey) == nil {
+            return defaultOpenLocalFilesInExternalEditor
+        }
+        return defaults.bool(forKey: openLocalFilesInExternalEditorKey)
     }
 
     static func hostWhitelist(defaults: UserDefaults = .standard) -> [String] {
