@@ -7596,8 +7596,10 @@ struct CMUXCLI {
                 icon: "bolt.fill",
                 color: "#4C8DFF"
             )
+            let sessionStartTask = extractUserPrompt(from: parsedInput)
+            let sessionStartTaskFlag = sessionStartTask.map { escapeTaskFlag($0) } ?? ""
             _ = try? sendV1Command(
-                "report_agent_status working --tab=\(workspaceId) --panel=\(surfaceId) --type=claude",
+                "report_agent_status working --tab=\(workspaceId) --panel=\(surfaceId) --type=claude\(sessionStartTaskFlag)",
                 client: client
             )
             print("OK")
@@ -7644,10 +7646,12 @@ struct CMUXCLI {
         case "prompt-submit":
             telemetry.breadcrumb("claude-hook.prompt-submit")
             var workspaceId = fallbackWorkspaceId
+            var preferredSurface = surfaceArg
             if let sessionId = parsedInput.sessionId,
                let mapped = try? sessionStore.lookup(sessionId: sessionId),
                let mappedWorkspace = try? resolveWorkspaceIdForClaudeHook(mapped.workspaceId, client: client) {
                 workspaceId = mappedWorkspace
+                preferredSurface = mapped.surfaceId
             }
             _ = try sendV1Command("clear_notifications --tab=\(workspaceId)", client: client)
             try setClaudeStatus(
@@ -7657,6 +7661,19 @@ struct CMUXCLI {
                 icon: "bolt.fill",
                 color: "#4C8DFF"
             )
+            // Update sub-tab task description with the user's prompt
+            if let promptSurfaceId = try? resolveSurfaceIdForClaudeHook(
+                preferredSurface,
+                workspaceId: workspaceId,
+                client: client
+            ) {
+                let promptTask = extractUserPrompt(from: parsedInput)
+                let promptTaskFlag = promptTask.map { escapeTaskFlag($0) } ?? ""
+                _ = try? sendV1Command(
+                    "report_agent_status working --tab=\(workspaceId) --panel=\(promptSurfaceId) --type=claude\(promptTaskFlag)",
+                    client: client
+                )
+            }
             print("OK")
 
         case "notification", "notify":
@@ -7723,10 +7740,8 @@ struct CMUXCLI {
                 workspaceId: workspaceId,
                 client: client
             )
-            let toolName = extractToolName(from: parsedInput)
-            let taskDesc = toolName.map { "Using \($0)" } ?? "Working"
             _ = try sendV1Command(
-                "report_agent_status working --tab=\(workspaceId) --panel=\(surfaceId) --type=claude --task=\(taskDesc)",
+                "report_agent_status working --tab=\(workspaceId) --panel=\(surfaceId) --type=claude",
                 client: client
             )
             print("OK")
@@ -7783,6 +7798,32 @@ struct CMUXCLI {
         if let toolInput = object["tool_input"] as? [String: Any],
            let name = toolInput["tool_name"] as? String { return name }
         return nil
+    }
+
+    /// Extract the user's prompt text from hook JSON for sub-tab task descriptions.
+    /// Truncates to a single-line summary suitable for sidebar display.
+    private func extractUserPrompt(from input: ClaudeHookParsedInput) -> String? {
+        guard let object = input.object else { return nil }
+        let keys = ["message", "prompt", "body", "text"]
+        let nested = object["data"] as? [String: Any]
+        let raw: String? = firstString(in: object, keys: keys)
+            ?? (nested.flatMap { firstString(in: $0, keys: keys) })
+        guard let text = raw?.trimmingCharacters(in: .whitespacesAndNewlines),
+              !text.isEmpty else { return nil }
+        // Single line, capped at 120 chars for sidebar
+        let oneLine = text.components(separatedBy: .newlines).first ?? text
+        if oneLine.count > 120 {
+            return String(oneLine.prefix(117)) + "..."
+        }
+        return oneLine
+    }
+
+    /// Escape a task description for embedding in a socket command `--task="..."` flag.
+    private func escapeTaskFlag(_ task: String) -> String {
+        let escaped = task
+            .replacingOccurrences(of: "\\", with: "\\\\")
+            .replacingOccurrences(of: "\"", with: "\\\"")
+        return " --task=\"\(escaped)\""
     }
 
     private func clearClaudeStatus(client: SocketClient, workspaceId: String) throws {

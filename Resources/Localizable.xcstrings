@@ -8,109 +8,109 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "gmux"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "gmux"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "gmux"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "gmux"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "gmux"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "gmux"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "gmux"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "gmux"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "gmux"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "gmux"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "gmux"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "gmux"
           }
         },
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "gmux"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "gmux"
           }
         },
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "gmux"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "gmux"
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "gmux"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "gmux"
           }
         }
       }
@@ -4690,7 +4690,7 @@
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux에서 이 호스트 항상 허용"
+            "value": "gmux에서 이 호스트 항상 허용"
           }
         },
         "de": {
@@ -7271,7 +7271,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux で続行"
+            "value": "gmux で続行"
           }
         },
         "zh-Hans": {
@@ -7289,7 +7289,7 @@
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux에서 계속"
+            "value": "gmux에서 계속"
           }
         },
         "de": {
@@ -7367,7 +7367,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux'ta devam et"
+            "value": "gmux'ta devam et"
           }
         }
       }
@@ -28261,25 +28261,25 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmuxの通知が無効になっています。アラートを表示するにはシステム設定で有効にしてください。"
+            "value": "gmuxの通知が無効になっています。アラートを表示するにはシステム設定で有効にしてください。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux 的通知已被禁用。请在系统设置中启用通知以接收提醒。"
+            "value": "gmux 的通知已被禁用。请在系统设置中启用通知以接收提醒。"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux 的通知已停用。請在「系統設定」中啟用，以接收提示。"
+            "value": "gmux 的通知已停用。請在「系統設定」中啟用，以接收提示。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux에 대한 알림이 비활성화되어 있습니다. 알림을 보려면 시스템 설정에서 활성화하세요."
+            "value": "gmux에 대한 알림이 비활성화되어 있습니다. 알림을 보려면 시스템 설정에서 활성화하세요."
           }
         },
         "de": {
@@ -28357,7 +28357,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux için bildirimler devre dışı. Uyarıları görmek için Sistem Ayarları'nda etkinleştirin."
+            "value": "gmux için bildirimler devre dışı. Uyarıları görmek için Sistem Ayarları'nda etkinleştirin."
           }
         }
       }
@@ -28600,7 +28600,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmuxの通知を有効にする"
+            "value": "gmuxの通知を有効にする"
           }
         },
         "zh-Hans": {
@@ -28618,7 +28618,7 @@
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux 알림 활성화"
+            "value": "gmux 알림 활성화"
           }
         },
         "de": {
@@ -28696,7 +28696,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux İçin Bildirimleri Etkinleştir"
+            "value": "gmux İçin Bildirimleri Etkinleştir"
           }
         }
       }
@@ -28707,79 +28707,79 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux could not move this tab to the selected destination."
+            "value": "gmux could not move this tab to the selected destination."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmuxはこのタブを選択した移動先に移動できませんでした。"
+            "value": "gmuxはこのタブを選択した移動先に移動できませんでした。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux 无法将此标签页移动到所选目标。"
+            "value": "gmux 无法将此标签页移动到所选目标。"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux 無法將此標籤頁移至所選的目的地。"
+            "value": "gmux 無法將此標籤頁移至所選的目的地。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux에서 이 탭을 선택한 대상으로 이동할 수 없습니다."
+            "value": "gmux에서 이 탭을 선택한 대상으로 이동할 수 없습니다."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux konnte diesen Tab nicht zum ausgewählten Ziel verschieben."
+            "value": "gmux konnte diesen Tab nicht zum ausgewählten Ziel verschieben."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux no pudo mover esta pestaña al destino seleccionado."
+            "value": "gmux no pudo mover esta pestaña al destino seleccionado."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux n'a pas pu déplacer cet onglet vers la destination sélectionnée."
+            "value": "gmux n'a pas pu déplacer cet onglet vers la destination sélectionnée."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux non è riuscito a spostare questa scheda nella destinazione selezionata."
+            "value": "gmux non è riuscito a spostare questa scheda nella destinazione selezionata."
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux kunne ikke flytte denne fane til den valgte destination."
+            "value": "gmux kunne ikke flytte denne fane til den valgte destination."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux nie mógł przenieść tej karty do wybranego miejsca docelowego."
+            "value": "gmux nie mógł przenieść tej karty do wybranego miejsca docelowego."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux не удалось переместить эту вкладку в выбранное место назначения."
+            "value": "gmux не удалось переместить эту вкладку в выбранное место назначения."
           }
         },
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux nije mogao premjestiti ovaj tab na odabrano odredište."
+            "value": "gmux nije mogao premjestiti ovaj tab na odabrano odredište."
           }
         },
         "ar": {
@@ -28791,7 +28791,7 @@
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux kunne ikke flytte denne fanen til den valgte destinasjonen."
+            "value": "gmux kunne ikke flytte denne fanen til den valgte destinasjonen."
           }
         },
         "pt-BR": {
@@ -28803,13 +28803,13 @@
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux ไม่สามารถย้ายแท็บนี้ไปยังปลายทางที่เลือกได้"
+            "value": "gmux ไม่สามารถย้ายแท็บนี้ไปยังปลายทางที่เลือกได้"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux bu sekmeyi seçilen hedefe taşıyamadı."
+            "value": "gmux bu sekmeyi seçilen hedefe taşıyamadı."
           }
         }
       }
@@ -29730,7 +29730,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux を終了しますか？"
+            "value": "gmux を終了しますか？"
           }
         },
         "zh-Hans": {
@@ -29748,13 +29748,13 @@
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux를 종료하시겠습니까?"
+            "value": "gmux를 종료하시겠습니까?"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux beenden?"
+            "value": "gmux beenden?"
           }
         },
         "es": {
@@ -29826,7 +29826,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux'tan çıkılsın mı?"
+            "value": "gmux'tan çıkılsın mı?"
           }
         }
       }
@@ -30747,7 +30747,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmuxについて"
+            "value": "gmuxについて"
           }
         },
         "zh-Hans": {
@@ -30765,7 +30765,7 @@
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux에 관하여"
+            "value": "gmux에 관하여"
           }
         },
         "de": {
@@ -30843,7 +30843,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux Hakkında"
+            "value": "gmux Hakkında"
           }
         }
       }
@@ -35606,7 +35606,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux を終了"
+            "value": "gmux を終了"
           }
         },
         "zh-Hans": {
@@ -35624,13 +35624,13 @@
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux 종료"
+            "value": "gmux 종료"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux beenden"
+            "value": "gmux beenden"
           }
         },
         "es": {
@@ -35702,7 +35702,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux'tan Çık"
+            "value": "gmux'tan Çık"
           }
         }
       }
@@ -40968,7 +40968,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmuxを再起動して適用"
+            "value": "gmuxを再起動して適用"
           }
         },
         "zh-Hans": {
@@ -40992,7 +40992,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux neu starten, um Änderung zu übernehmen"
+            "value": "gmux neu starten, um Änderung zu übernehmen"
           }
         },
         "es": {
@@ -44268,7 +44268,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmuxの改善に役立てるため、匿名化されたクラッシュおよび使用状況データを共有します。"
+            "value": "gmuxの改善に役立てるため、匿名化されたクラッシュおよび使用状況データを共有します。"
           }
         },
         "zh-Hans": {
@@ -44286,7 +44286,7 @@
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux 개선을 위해 익명화된 충돌 및 사용 데이터를 공유합니다."
+            "value": "gmux 개선을 위해 익명화된 충돌 및 사용 데이터를 공유합니다."
           }
         },
         "de": {
@@ -44364,7 +44364,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux'u iyileştirmek için anonimleştirilmiş çökme ve kullanım verilerini paylaş."
+            "value": "gmux'u iyileştirmek için anonimleştirilmiş çökme ve kullanım verilerini paylaş."
           }
         }
       }
@@ -45184,7 +45184,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux がペインを強調表示するときに短い青いアウトラインを表示します。"
+            "value": "gmux がペインを強調表示するときに短い青いアウトラインを表示します。"
           }
         }
       }
@@ -50355,7 +50355,7 @@
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux에서 경고 없이 열 수 있는 HTTP(비HTTPS) 호스트를 제어합니다. 기본값에는 localhost, 127.0.0.1, ::1, 0.0.0.0 및 *.localtest.me가 포함됩니다."
+            "value": "gmux에서 경고 없이 열 수 있는 HTTP(비HTTPS) 호스트를 제어합니다. 기본값에는 localhost, 127.0.0.1, ::1, 0.0.0.0 및 *.localtest.me가 포함됩니다."
           }
         },
         "de": {
@@ -62315,7 +62315,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux ターミナル内で起動したプロセスのみがコマンドを送信できます。"
+            "value": "gmux ターミナル内で起動したプロセスのみがコマンドを送信できます。"
           }
         },
         "zh-Hans": {
@@ -62333,7 +62333,7 @@
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux 터미널 내에서 시작된 프로세스만 명령을 보낼 수 있습니다."
+            "value": "gmux 터미널 내에서 시작된 프로세스만 명령을 보낼 수 있습니다."
           }
         },
         "de": {
@@ -62428,7 +62428,7 @@
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux プロセスのみ"
+            "value": "gmux プロセスのみ"
           }
         },
         "zh-Hans": {
@@ -62446,7 +62446,7 @@
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux 프로세스만"
+            "value": "gmux 프로세스만"
           }
         },
         "de": {
@@ -66716,79 +66716,79 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux couldn't download the update feed. Check your connection and try again."
+            "value": "gmux couldn't download the update feed. Check your connection and try again."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux はアップデートフィードをダウンロードできませんでした。接続を確認してもう一度お試しください。"
+            "value": "gmux はアップデートフィードをダウンロードできませんでした。接続を確認してもう一度お試しください。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux 无法下载更新源。请检查网络连接后重试。"
+            "value": "gmux 无法下载更新源。请检查网络连接后重试。"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux 無法下載更新來源。請檢查您的連線後再試一次。"
+            "value": "gmux 無法下載更新來源。請檢查您的連線後再試一次。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux에서 업데이트 피드를 다운로드할 수 없습니다. 연결을 확인하고 다시 시도하세요."
+            "value": "gmux에서 업데이트 피드를 다운로드할 수 없습니다. 연결을 확인하고 다시 시도하세요."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux konnte den Update-Feed nicht herunterladen. Überprüfen Sie Ihre Verbindung und versuchen Sie es erneut."
+            "value": "gmux konnte den Update-Feed nicht herunterladen. Überprüfen Sie Ihre Verbindung und versuchen Sie es erneut."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux no pudo descargar la fuente de actualizaciones. Comprueba tu conexión e inténtalo de nuevo."
+            "value": "gmux no pudo descargar la fuente de actualizaciones. Comprueba tu conexión e inténtalo de nuevo."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux n'a pas pu télécharger le flux de mises à jour. Vérifiez votre connexion et réessayez."
+            "value": "gmux n'a pas pu télécharger le flux de mises à jour. Vérifiez votre connexion et réessayez."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux non è riuscito a scaricare il feed degli aggiornamenti. Controlla la connessione e riprova."
+            "value": "gmux non è riuscito a scaricare il feed degli aggiornamenti. Controlla la connessione e riprova."
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux kunne ikke downloade opdateringsfeedet. Kontroller din forbindelse, og prøv igen."
+            "value": "gmux kunne ikke downloade opdateringsfeedet. Kontroller din forbindelse, og prøv igen."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux nie mógł pobrać kanału aktualizacji. Sprawdź połączenie i spróbuj ponownie."
+            "value": "gmux nie mógł pobrać kanału aktualizacji. Sprawdź połączenie i spróbuj ponownie."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux не удалось загрузить канал обновлений. Проверьте подключение и повторите попытку."
+            "value": "gmux не удалось загрузить канал обновлений. Проверьте подключение и повторите попытку."
           }
         },
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux nije mogao preuzeti feed ažuriranja. Provjerite vezu i pokušajte ponovo."
+            "value": "gmux nije mogao preuzeti feed ažuriranja. Provjerite vezu i pokušajte ponovo."
           }
         },
         "ar": {
@@ -66800,7 +66800,7 @@
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux kunne ikke laste ned oppdateringsfeeden. Kontroller tilkoblingen og prøv igjen."
+            "value": "gmux kunne ikke laste ned oppdateringsfeeden. Kontroller tilkoblingen og prøv igjen."
           }
         },
         "pt-BR": {
@@ -66812,13 +66812,13 @@
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux ไม่สามารถดาวน์โหลดฟีดอัปเดตได้ ตรวจสอบการเชื่อมต่อแล้วลองอีกครั้ง"
+            "value": "gmux ไม่สามารถดาวน์โหลดฟีดอัปเดตได้ ตรวจสอบการเชื่อมต่อแล้วลองอีกครั้ง"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux güncelleme akışını indiremedi. Bağlantınızı kontrol edip tekrar deneyin."
+            "value": "gmux güncelleme akışını indiremedi. Bağlantınızı kontrol edip tekrar deneyin."
           }
         }
       }
@@ -67507,79 +67507,79 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux can't reach the update server. Check your internet connection and try again."
+            "value": "gmux can't reach the update server. Check your internet connection and try again."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux はアップデートサーバーに接続できません。インターネット接続を確認してもう一度お試しください。"
+            "value": "gmux はアップデートサーバーに接続できません。インターネット接続を確認してもう一度お試しください。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux 无法连接到更新服务器。请检查互联网连接后重试。"
+            "value": "gmux 无法连接到更新服务器。请检查互联网连接后重试。"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux 無法連線至更新伺服器。請檢查您的網際網路連線後再試一次。"
+            "value": "gmux 無法連線至更新伺服器。請檢查您的網際網路連線後再試一次。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux에서 업데이트 서버에 연결할 수 없습니다. 인터넷 연결을 확인하고 다시 시도하세요."
+            "value": "gmux에서 업데이트 서버에 연결할 수 없습니다. 인터넷 연결을 확인하고 다시 시도하세요."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux kann den Update-Server nicht erreichen. Überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut."
+            "value": "gmux kann den Update-Server nicht erreichen. Überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux no puede acceder al servidor de actualizaciones. Comprueba tu conexión a internet e inténtalo de nuevo."
+            "value": "gmux no puede acceder al servidor de actualizaciones. Comprueba tu conexión a internet e inténtalo de nuevo."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux ne peut pas atteindre le serveur de mises à jour. Vérifiez votre connexion Internet et réessayez."
+            "value": "gmux ne peut pas atteindre le serveur de mises à jour. Vérifiez votre connexion Internet et réessayez."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux non riesce a raggiungere il server degli aggiornamenti. Controlla la connessione a internet e riprova."
+            "value": "gmux non riesce a raggiungere il server degli aggiornamenti. Controlla la connessione a internet e riprova."
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux kan ikke nå opdateringsserveren. Kontroller din internetforbindelse, og prøv igen."
+            "value": "gmux kan ikke nå opdateringsserveren. Kontroller din internetforbindelse, og prøv igen."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux nie może połączyć się z serwerem aktualizacji. Sprawdź połączenie z internetem i spróbuj ponownie."
+            "value": "gmux nie może połączyć się z serwerem aktualizacji. Sprawdź połączenie z internetem i spróbuj ponownie."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux не может связаться с сервером обновлений. Проверьте подключение к интернету и повторите попытку."
+            "value": "gmux не может связаться с сервером обновлений. Проверьте подключение к интернету и повторите попытку."
           }
         },
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux ne može dosegnuti server za ažuriranje. Provjerite internetsku vezu i pokušajte ponovo."
+            "value": "gmux ne može dosegnuti server za ažuriranje. Provjerite internetsku vezu i pokušajte ponovo."
           }
         },
         "ar": {
@@ -67591,7 +67591,7 @@
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux kan ikke nå oppdateringsserveren. Kontroller internettforbindelsen og prøv igjen."
+            "value": "gmux kan ikke nå oppdateringsserveren. Kontroller internettforbindelsen og prøv igjen."
           }
         },
         "pt-BR": {
@@ -67603,13 +67603,13 @@
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux ไม่สามารถเข้าถึงเซิร์ฟเวอร์อัปเดตได้ ตรวจสอบการเชื่อมต่ออินเทอร์เน็ตแล้วลองอีกครั้ง"
+            "value": "gmux ไม่สามารถเข้าถึงเซิร์ฟเวอร์อัปเดตได้ ตรวจสอบการเชื่อมต่ออินเทอร์เน็ตแล้วลองอีกครั้ง"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux güncelleme sunucusuna ulaşamıyor. İnternet bağlantınızı kontrol edip tekrar deneyin."
+            "value": "gmux güncelleme sunucusuna ulaşamıyor. İnternet bağlantınızı kontrol edip tekrar deneyin."
           }
         }
       }
@@ -67757,7 +67757,7 @@
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux를 응용 프로그램 폴더로 이동하고 재실행하여 업데이트를 활성화하세요."
+            "value": "gmux를 응용 프로그램 폴더로 이동하고 재실행하여 업데이트를 활성화하세요."
           }
         },
         "de": {
@@ -68411,79 +68411,79 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux couldn't connect to the update server. Check your connection or try again later."
+            "value": "gmux couldn't connect to the update server. Check your connection or try again later."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux はアップデートサーバーに接続できませんでした。接続を確認するか、後でもう一度お試しください。"
+            "value": "gmux はアップデートサーバーに接続できませんでした。接続を確認するか、後でもう一度お試しください。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux 无法连接到更新服务器。请检查网络连接或稍后重试。"
+            "value": "gmux 无法连接到更新服务器。请检查网络连接或稍后重试。"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux 無法連線至更新伺服器。請檢查您的連線或稍後再試。"
+            "value": "gmux 無法連線至更新伺服器。請檢查您的連線或稍後再試。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux에서 업데이트 서버에 연결할 수 없습니다. 연결을 확인하거나 나중에 다시 시도하세요."
+            "value": "gmux에서 업데이트 서버에 연결할 수 없습니다. 연결을 확인하거나 나중에 다시 시도하세요."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux konnte keine Verbindung zum Update-Server herstellen. Überprüfen Sie Ihre Verbindung oder versuchen Sie es später erneut."
+            "value": "gmux konnte keine Verbindung zum Update-Server herstellen. Überprüfen Sie Ihre Verbindung oder versuchen Sie es später erneut."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux no pudo conectar con el servidor de actualizaciones. Comprueba tu conexión o inténtalo de nuevo más tarde."
+            "value": "gmux no pudo conectar con el servidor de actualizaciones. Comprueba tu conexión o inténtalo de nuevo más tarde."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux n'a pas pu se connecter au serveur de mises à jour. Vérifiez votre connexion ou réessayez plus tard."
+            "value": "gmux n'a pas pu se connecter au serveur de mises à jour. Vérifiez votre connexion ou réessayez plus tard."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux non è riuscito a connettersi al server degli aggiornamenti. Controlla la connessione o riprova più tardi."
+            "value": "gmux non è riuscito a connettersi al server degli aggiornamenti. Controlla la connessione o riprova più tardi."
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux kunne ikke oprette forbindelse til opdateringsserveren. Kontroller din forbindelse, eller prøv igen senere."
+            "value": "gmux kunne ikke oprette forbindelse til opdateringsserveren. Kontroller din forbindelse, eller prøv igen senere."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux nie mógł połączyć się z serwerem aktualizacji. Sprawdź połączenie lub spróbuj ponownie później."
+            "value": "gmux nie mógł połączyć się z serwerem aktualizacji. Sprawdź połączenie lub spróbuj ponownie później."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux не удалось подключиться к серверу обновлений. Проверьте подключение или повторите попытку позже."
+            "value": "gmux не удалось подключиться к серверу обновлений. Проверьте подключение или повторите попытку позже."
           }
         },
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux se nije mogao povezati na server za ažuriranje. Provjerite vezu ili pokušajte ponovo kasnije."
+            "value": "gmux se nije mogao povezati na server za ažuriranje. Provjerite vezu ili pokušajte ponovo kasnije."
           }
         },
         "ar": {
@@ -68495,7 +68495,7 @@
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux kunne ikke koble til oppdateringsserveren. Kontroller tilkoblingen eller prøv igjen senere."
+            "value": "gmux kunne ikke koble til oppdateringsserveren. Kontroller tilkoblingen eller prøv igjen senere."
           }
         },
         "pt-BR": {
@@ -68507,13 +68507,13 @@
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์อัปเดตได้ ตรวจสอบการเชื่อมต่อหรือลองอีกครั้งในภายหลัง"
+            "value": "gmux ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์อัปเดตได้ ตรวจสอบการเชื่อมต่อหรือลองอีกครั้งในภายหลัง"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux güncelleme sunucusuna bağlanamadı. Bağlantınızı kontrol edin veya daha sonra tekrar deneyin."
+            "value": "gmux güncelleme sunucusuna bağlanamadı. Bağlantınızı kontrol edin veya daha sonra tekrar deneyin."
           }
         }
       }
@@ -69993,79 +69993,79 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux can automatically check for updates in the background."
+            "value": "gmux can automatically check for updates in the background."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux はバックグラウンドで自動的にアップデートを確認できます。"
+            "value": "gmux はバックグラウンドで自動的にアップデートを確認できます。"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux 可以在后台自动检查更新。"
+            "value": "gmux 可以在后台自动检查更新。"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux 可以在背景自動檢查更新。"
+            "value": "gmux 可以在背景自動檢查更新。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux가 백그라운드에서 자동으로 업데이트를 확인할 수 있습니다."
+            "value": "gmux가 백그라운드에서 자동으로 업데이트를 확인할 수 있습니다."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux kann automatisch im Hintergrund nach Updates suchen."
+            "value": "gmux kann automatisch im Hintergrund nach Updates suchen."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux puede buscar actualizaciones automáticamente en segundo plano."
+            "value": "gmux puede buscar actualizaciones automáticamente en segundo plano."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux peut rechercher automatiquement les mises à jour en arrière-plan."
+            "value": "gmux peut rechercher automatiquement les mises à jour en arrière-plan."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux può verificare automaticamente la disponibilità di aggiornamenti in background."
+            "value": "gmux può verificare automaticamente la disponibilità di aggiornamenti in background."
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux kan automatisk søge efter opdateringer i baggrunden."
+            "value": "gmux kan automatisk søge efter opdateringer i baggrunden."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux może automatycznie sprawdzać aktualizacje w tle."
+            "value": "gmux może automatycznie sprawdzać aktualizacje w tle."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux может автоматически проверять наличие обновлений в фоновом режиме."
+            "value": "gmux может автоматически проверять наличие обновлений в фоновом режиме."
           }
         },
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux može automatski provjeravati ažuriranja u pozadini."
+            "value": "gmux može automatski provjeravati ažuriranja u pozadini."
           }
         },
         "ar": {
@@ -70077,7 +70077,7 @@
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux kan automatisk se etter oppdateringer i bakgrunnen."
+            "value": "gmux kan automatisk se etter oppdateringer i bakgrunnen."
           }
         },
         "pt-BR": {
@@ -70089,13 +70089,13 @@
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux สามารถตรวจหาอัปเดตอัตโนมัติในเบื้องหลังได้"
+            "value": "gmux สามารถตรวจหาอัปเดตอัตโนมัติในเบื้องหลังได้"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux arka planda otomatik olarak güncellemeleri denetleyebilir."
+            "value": "gmux arka planda otomatik olarak güncellemeleri denetleyebilir."
           }
         }
       }

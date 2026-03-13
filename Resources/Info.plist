@@ -27,9 +27,9 @@
 	<key>NSMainStoryboardFile</key>
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>A program running within cmux would like to use your microphone.</string>
+	<string>A program running within gmux would like to use your microphone.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>A program running within cmux would like to use your camera.</string>
+	<string>A program running within gmux would like to use your camera.</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

@@ -7313,41 +7313,60 @@ struct VerticalTabsSidebar: View {
                                         return orderedIds.compactMap { panelId in
                                             guard let panel = tab.panels[panelId] else { return nil }
                                             let session = tab.agentSessions[panelId]
-                                            let label: String
+                                            // Use the resolved panel title (same as bonsplit tab bar)
+                                            let title = tab.panelTitle(panelId: panelId)
+                                                ?? panel.displayTitle
                                             let icon: String
                                             if let session {
                                                 switch session.agentType {
-                                                case .claude:
-                                                    label = "Claude"
-                                                    icon = "sparkle"
-                                                case .codex:
-                                                    label = "Codex"
-                                                    icon = "sparkle"
-                                                case .terminal:
-                                                    label = String(localized: "subtab.terminal", defaultValue: "Terminal")
-                                                    icon = "terminal"
+                                                case .claude, .codex: icon = "sparkle"
+                                                case .terminal: icon = "terminal"
                                                 }
                                             } else if panel is TerminalPanel {
-                                                label = String(localized: "subtab.terminal", defaultValue: "Terminal")
                                                 icon = "terminal"
                                             } else {
-                                                label = String(localized: "subtab.browser", defaultValue: "Browser")
                                                 icon = "globe"
                                             }
-                                            let statusColor: Color? = session.flatMap { s in
+                                            let statusColor: Color? = session.map { s in
                                                 switch s.status {
-                                                case .working: return .green
-                                                case .thinking: return .yellow
-                                                case .waiting: return .blue
-                                                case .idle, .stopped: return nil
+                                                case .working: return .blue
+                                                case .thinking: return .blue
+                                                case .waiting: return .yellow
+                                                case .idle: return .gray
+                                                case .stopped: return .green
                                                 }
+                                            }
+                                            let statusText: String? = session.map { s in
+                                                switch s.status {
+                                                case .working: return String(localized: "subtab.status.working", defaultValue: "Working")
+                                                case .thinking: return String(localized: "subtab.status.thinking", defaultValue: "Thinking")
+                                                case .waiting: return String(localized: "subtab.status.waiting", defaultValue: "Waiting")
+                                                case .idle: return String(localized: "subtab.status.idle", defaultValue: "Idle")
+                                                case .stopped: return String(localized: "subtab.status.stopped", defaultValue: "Done")
+                                                }
+                                            }
+                                            // Per-panel description: agent task, or working directory for non-agent panels
+                                            let description: String?
+                                            if let task = session?.currentTask, !task.isEmpty {
+                                                description = task
+                                            } else if session == nil, let dir = tab.panelDirectories[panelId] {
+                                                // Only show directory for non-agent panels (terminals, browsers)
+                                                description = dir.replacingOccurrences(
+                                                    of: FileManager.default.homeDirectoryForCurrentUser.path,
+                                                    with: "~"
+                                                )
+                                            } else {
+                                                description = nil
                                             }
                                             return SubTabPanelInfo(
                                                 id: panelId,
-                                                label: label,
+                                                title: title,
                                                 iconName: icon,
                                                 isFocused: panelId == focusedId,
-                                                statusColor: statusColor
+                                                statusColor: statusColor,
+                                                description: description,
+                                                statusText: statusText,
+                                                hasAgent: session != nil
                                             )
                                         }
                                     }(),
@@ -9591,13 +9610,81 @@ enum SidebarWorkspaceShortcutHintMetrics {
     #endif
 }
 
-/// Precomputed sub-tab panel info for sidebar pill indicators.
+/// Precomputed sub-tab panel info for sidebar vertical list items.
 struct SubTabPanelInfo: Equatable, Identifiable {
     let id: UUID  // panelId
-    let label: String       // "Terminal", "Claude", "Browser"
+    let title: String       // resolved panel title (from bonsplit tab bar)
     let iconName: String    // SF Symbol
     let isFocused: Bool
     let statusColor: Color?
+    let description: String?  // per-panel: agent currentTask, or terminal working directory
+    let statusText: String?
+    let hasAgent: Bool
+}
+
+/// A single row in the vertical sub-tab list. Pure value-based, no subscriptions.
+private struct SubTabRow: View {
+    let panel: SubTabPanelInfo
+
+    /// Whether this sub-tab row sits inside an active (selected) primary tab.
+    let isParentActive: Bool
+    let onSelect: () -> Void
+
+    var body: some View {
+        Button(action: onSelect) {
+            HStack(spacing: 6) {
+                // Left color bar — tall rounded strip matching the mock
+                RoundedRectangle(cornerRadius: 1.5)
+                    .fill(panel.statusColor ?? Color.primary.opacity(0.15))
+                    .frame(width: 3)
+
+                VStack(alignment: .leading, spacing: 3) {
+                    // Line 1: title + status pill
+                    HStack(spacing: 4) {
+                        Text(panel.title)
+                            .font(.system(size: 12.5, weight: .medium))
+                            .foregroundColor(.primary.opacity(panel.isFocused ? 1.0 : 0.75))
+                            .lineLimit(1)
+                            .truncationMode(.tail)
+
+                        Spacer(minLength: 0)
+
+                        // Status badge pill
+                        if let status = panel.statusText, let color = panel.statusColor {
+                            Text(status)
+                                .font(.system(size: 10, weight: .medium))
+                                .foregroundColor(color)
+                                .padding(.horizontal, 7)
+                                .padding(.vertical, 2.5)
+                                .background(
+                                    Capsule().fill(color.opacity(0.18))
+                                )
+                        }
+                    }
+
+                    // Line 2: per-panel description (agent task or working directory)
+                    if let desc = panel.description {
+                        Text(desc)
+                            .font(.system(size: 11))
+                            .foregroundColor(.secondary)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
+                    }
+                }
+            }
+            .padding(.vertical, 8)
+            .padding(.horizontal, 8)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
+            .background(
+                RoundedRectangle(cornerRadius: 5)
+                    .fill(panel.isFocused
+                        ? Color.accentColor.opacity(isParentActive ? 0.18 : 0.10)
+                        : Color.clear)
+            )
+        }
+        .buttonStyle(.plain)
+    }
 }
 
 /// Precomputed agent session summary for sidebar display.
@@ -9621,19 +9708,19 @@ struct AgentSessionSummary: Equatable {
         switch session.status {
         case .working:
             statusText = session.currentTask ?? String(localized: "agent.status.working", defaultValue: "Working")
-            statusColor = .green
+            statusColor = .blue
         case .thinking:
             statusText = String(localized: "agent.status.thinking", defaultValue: "Thinking")
-            statusColor = .yellow
+            statusColor = .blue
         case .waiting:
             statusText = String(localized: "agent.status.waiting", defaultValue: "Waiting for input")
-            statusColor = .blue
+            statusColor = .yellow
         case .idle:
             statusText = String(localized: "agent.status.idle", defaultValue: "Idle")
             statusColor = .gray
         case .stopped:
             statusText = String(localized: "agent.status.stopped", defaultValue: "Stopped")
-            statusColor = .gray
+            statusColor = .green
         }
 
         let label = session.sessionName ?? session.currentTask ?? ""
@@ -9738,26 +9825,16 @@ private struct TabItemView: View, Equatable {
     }
 
     private var activeBorderLineWidth: CGFloat {
-        switch activeTabIndicatorStyle {
-        case .leftRail:
-            return 0
-        case .solidFill:
-            return isActive ? 1.5 : 0
-        }
+        isActive ? 1.5 : 0
     }
 
     private var activeBorderColor: Color {
         guard isActive else { return .clear }
-        switch activeTabIndicatorStyle {
-        case .leftRail:
-            return .clear
-        case .solidFill:
-            return Color.primary.opacity(0.5)
-        }
+        return Color(nsColor: sidebarSelectedWorkspaceBackgroundNSColor(for: colorScheme))
     }
 
     private var usesInvertedActiveForeground: Bool {
-        isActive
+        false
     }
 
     private var activePrimaryTextColor: Color {
@@ -9867,7 +9944,7 @@ private struct TabItemView: View, Equatable {
 
         VStack(alignment: .leading, spacing: 4) {
             HStack(spacing: 8) {
-                if unreadCount > 0 {
+                if !sidebarShowSubTabs, unreadCount > 0 {
                     ZStack {
                         Circle()
                             .fill(activeUnreadBadgeFillColor)
@@ -9930,7 +10007,7 @@ private struct TabItemView: View, Equatable {
                 .frame(width: workspaceHintSlotWidth, height: 16, alignment: .trailing)
             }
 
-            if let subtitle = latestNotificationSubtitle {
+            if !sidebarShowSubTabs, let subtitle = latestNotificationSubtitle {
                 Text(subtitle)
                     .font(.system(size: 10))
                     .foregroundColor(activeSecondaryColor(0.8))
@@ -9939,8 +10016,8 @@ private struct TabItemView: View, Equatable {
                     .multilineTextAlignment(.leading)
             }
 
-            // Agent session info
-            if sidebarShowAgentSessions, let summary = agentSessionSummary {
+            // Agent session info (fallback when sub-tabs are hidden)
+            if sidebarShowAgentSessions, !sidebarShowSubTabs, let summary = agentSessionSummary {
                 HStack(spacing: 4) {
                     Circle()
                         .fill(summary.statusColor)
@@ -9961,37 +10038,18 @@ private struct TabItemView: View, Equatable {
                 .transition(.opacity.combined(with: .move(edge: .top)))
             }
 
-            // Sub-tab panel indicators (only show when there are multiple panels)
-            if sidebarShowSubTabs, subTabPanels.count > 1 {
-                HStack(spacing: 3) {
+            // Sub-tab panel list (vertical rows with color bar, title, description, status badge)
+            if sidebarShowSubTabs {
+                VStack(spacing: 3) {
                     ForEach(subTabPanels) { panel in
-                        Button(action: {
-                            tabManager.selectTab(tab)
-                            tab.focusPanel(panel.id)
-                        }) {
-                            HStack(spacing: 2) {
-                                Image(systemName: panel.iconName)
-                                    .font(.system(size: 8))
-                                if let color = panel.statusColor {
-                                    Circle()
-                                        .fill(color)
-                                        .frame(width: 4, height: 4)
-                                }
-                                Text(panel.label)
-                                    .font(.system(size: 9))
-                                    .lineLimit(1)
+                        SubTabRow(
+                            panel: panel,
+                            isParentActive: isActive,
+                            onSelect: {
+                                tabManager.selectTab(tab)
+                                tab.focusPanel(panel.id)
                             }
-                            .padding(.horizontal, 4)
-                            .padding(.vertical, 2)
-                            .background(
-                                RoundedRectangle(cornerRadius: 4)
-                                    .fill(panel.isFocused
-                                        ? activeSecondaryColor(0.15)
-                                        : Color.clear)
-                            )
-                            .foregroundColor(activeSecondaryColor(panel.isFocused ? 0.9 : 0.6))
-                        }
-                        .buttonStyle(.plain)
+                        )
                     }
                 }
                 .transition(.opacity.combined(with: .move(edge: .top)))
@@ -10000,7 +10058,7 @@ private struct TabItemView: View, Equatable {
             if detailVisibility.showsMetadata {
                 let metadataEntries = tab.sidebarStatusEntriesInDisplayOrder()
                 let metadataBlocks = tab.sidebarMetadataBlocksInDisplayOrder()
-                if !metadataEntries.isEmpty {
+                if !sidebarShowSubTabs, !metadataEntries.isEmpty {
                     SidebarMetadataRows(
                         entries: metadataEntries,
                         isActive: usesInvertedActiveForeground,
@@ -10185,7 +10243,7 @@ private struct TabItemView: View, Equatable {
             }
         }
         .contentShape(Rectangle())
-        .opacity(isBeingDragged ? 0.6 : 1)
+        .opacity(isBeingDragged ? 0.6 : isActive ? 1.0 : 0.5)
         .overlay {
             MiddleClickCapture {
                 #if DEBUG
@@ -10425,11 +10483,11 @@ private struct TabItemView: View, Equatable {
     private var backgroundColor: Color {
         switch activeTabIndicatorStyle {
         case .leftRail:
-            if isActive        { return Color(nsColor: sidebarSelectedWorkspaceBackgroundNSColor(for: colorScheme)) }
+            if isActive        { return Color.clear }
             if isMultiSelected { return cmuxAccentColor().opacity(0.25) }
             return Color.clear
         case .solidFill:
-            if isActive { return Color(nsColor: sidebarSelectedWorkspaceBackgroundNSColor(for: colorScheme)) }
+            if isActive { return Color.clear }
             if let custom = resolvedCustomTabColor {
                 if isMultiSelected { return custom.opacity(0.35) }
                 return custom.opacity(0.7)
